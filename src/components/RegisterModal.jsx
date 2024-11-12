@@ -1,17 +1,25 @@
 import { useRef } from 'react';
 import styled from 'styled-components';
+import { ActionsButton, HeaderActions } from '../styles/common';
+import { useDispatch } from 'react-redux';
+import { closeRegisterModal } from '../redux/slices/RegisterModalSlice';
 
 const RegisterModal = () => {
   const modal = useRef();
+  const dispatch = useDispatch();
+
+  const handleBackdropClick = (e) => {
+    if (e.target === modal.current) dispatch(closeRegisterModal());
+  };
 
   return (
-    <Modal className={'modal-container'} ref={modal}>
+    <Modal className={'modal-container'} ref={modal} onClick={(e) => handleBackdropClick(e)}>
       <Dialog className={'modal-content'}>
-        <DialogHeader>
-          <Button>불러오기</Button>
+        <HeaderActions>
+          <ActionsButton>불러오기</ActionsButton>
           <HeaderTitle>내역 입력</HeaderTitle>
-          <Button>저장하기</Button>
-        </DialogHeader>
+          <ActionsButton>저장하기</ActionsButton>
+        </HeaderActions>
         <Form>
           <Grid>
             <Label htmlFor="name">날짜</Label>
@@ -19,11 +27,11 @@ const RegisterModal = () => {
               <Input type="text" id="name"></Input>
             </FormContent>
             <Label htmlFor="amount">구분</Label>
-            <FormContent>{/* <button>지출</button> */}</FormContent>
+            <FormContent>{/* <ActionsButton>지출</ActionsButton> */}</FormContent>
             <Label htmlFor="amount">금액</Label>
             <FormContent>
               <Input type="number" id="amount"></Input>
-              {/* <button>x</button> */}
+              {/* <ActionsButton>x</ActionsButton> */}
             </FormContent>
             <Label htmlFor="name">사용내역</Label>
             <FormContent>
@@ -44,20 +52,7 @@ const RegisterModal = () => {
   );
 };
 
-const HeaderTitle = styled.h3`
-  text-align: end;
-`;
-
-const Button = styled.button`
-  border: none;
-  border-radius: 4px;
-  height: 35px;
-  color: white;
-  padding: 7px;
-  background-color: #3e80fa;
-  font-weight: bold;
-  box-shadow: inset 0 0 1px;
-`;
+const HeaderTitle = styled.h3``;
 
 const FormContent = styled.div`
   display: flex;
@@ -66,17 +61,6 @@ const FormContent = styled.div`
   border-left: 2px double crimson;
   width: 100%;
   padding-left: 10px;
-`;
-
-const DialogHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  color: white;
-  background-color: #5591ff;
-  padding: 8px;
-  height: 50px;
 `;
 
 const Form = styled.form`
@@ -109,11 +93,11 @@ const Input = styled.input`
   width: 100%;
   caret-color: #15cbadbd;
 
-  &::-webkit-inner-spin-button {
+  &::-webkit-inner-spin-actionsbutton {
     -webkit-appearance: none;
     margin: 0;
   }
-  &::-webkit-outer-spin-button {
+  &::-webkit-outer-spin-actionsbutton {
     -webkit-appearance: none;
     margin: 0;
   }
