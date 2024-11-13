@@ -2,28 +2,20 @@ import styled from 'styled-components';
 import FormInput from './FormInput';
 import useForm from '../modules/useForm';
 import { ActionsButton, FormContent, HeaderActions, Label } from '../styles/common';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addExpenditure } from '../redux/slices/ExpendituresSlice';
 import { closeRegisterModal } from '../redux/slices/RegisterModalSlice';
 
-const initialValues = {
-  date: '',
-  amount: 0,
-  name: '',
-  place: '',
-  category: '',
-  categoryName: '미분류',
-};
-
 const ExpenditureForm = () => {
-  const { values, handleInputChange, resetForm } = useForm(initialValues);
+  const { selectedExpenditure } = useSelector((state) => state.selectedExpenditure);
+  const { values, handleInputChange, resetForm } = useForm(selectedExpenditure);
   const dispatch = useDispatch();
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     dispatch(addExpenditure(values));
-    resetForm();
     dispatch(closeRegisterModal());
+    resetForm();
   };
 
   return (

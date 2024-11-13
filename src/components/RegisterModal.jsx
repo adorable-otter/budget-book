@@ -1,21 +1,27 @@
 import { useRef } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { closeRegisterModal } from '../redux/slices/RegisterModalSlice';
 import ExpenditureForm from './ExpenditureForm';
+import { unSelectExpenditure } from '../redux/slices/SelectedExpenditureSlice';
 
 const RegisterModal = () => {
+  const { isRegisterModalOpen } = useSelector((state) => state.isRegisterModalOpen);
   const modal = useRef();
   const dispatch = useDispatch();
 
+  if (!isRegisterModalOpen) return null;
+
   const handleBackdropClick = (e) => {
-    if (e.target === modal.current) dispatch(closeRegisterModal());
+    if (e.target === modal.current) {
+      dispatch(closeRegisterModal());
+      dispatch(unSelectExpenditure())
+    }
   };
 
   return (
     <Modal className={'modal-container'} ref={modal} onClick={(e) => handleBackdropClick(e)}>
       <Dialog className={'modal-content'}>
-
         <ExpenditureForm />
       </Dialog>
     </Modal>

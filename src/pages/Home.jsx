@@ -1,35 +1,20 @@
 import styled from 'styled-components';
 import RegisterModal from '../components/RegisterModal';
 import Header from '../components/Header';
-import { useSelector } from 'react-redux';
-import ExpenditureRow from '../components/ExpenditureRow';
+import ExpenditureList from '../components/ExpenditureList';
 
 const Home = () => {
-  const { isRegisterModalOpen } = useSelector((state) => state.isRegisterModalOpen);
-  const { expenditures } = useSelector((state) => state.expenditures);
-
   return (
     <HomeWrap>
       <Header />
       <main>
         <div>예산 영역</div>
-        <Grid>
-          {expenditures.map((data) => (
-            <ExpenditureRow key={data.id} data={data} />
-          ))}
-        </Grid>
+        <ExpenditureList />
       </main>
-      {isRegisterModalOpen && <RegisterModal />}
+      <RegisterModal />
     </HomeWrap>
   );
 };
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr 1fr;
-  border-left: 1px solid gray;
-  border-right: 1px solid gray;
-`;
 
 const HomeWrap = styled.div`
   display: flex;

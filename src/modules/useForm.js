@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { initialFormState } from '../constants/form';
 
 const useForm = (initialValues) => {
   const [values, setValues] = useState(initialValues);
@@ -12,7 +13,7 @@ const useForm = (initialValues) => {
   };
 
   const resetForm = () => {
-    setValues(initialValues);
+    setValues(initialFormState);
   };
 
   return { values, handleInputChange, resetForm };
