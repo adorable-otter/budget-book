@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 import styled from 'styled-components';
-import { ActionsButton, HeaderActions } from '../styles/common';
 import { useDispatch } from 'react-redux';
 import { closeRegisterModal } from '../redux/slices/RegisterModalSlice';
+import ExpenditureForm from './ExpenditureForm';
 
 const RegisterModal = () => {
   const modal = useRef();
@@ -15,69 +15,12 @@ const RegisterModal = () => {
   return (
     <Modal className={'modal-container'} ref={modal} onClick={(e) => handleBackdropClick(e)}>
       <Dialog className={'modal-content'}>
-        <HeaderActions>
-          <ActionsButton>불러오기</ActionsButton>
-          <HeaderTitle>내역 입력</HeaderTitle>
-          <ActionsButton>저장하기</ActionsButton>
-        </HeaderActions>
-        <Form>
-          <Grid>
-            <Label htmlFor="name">날짜</Label>
-            <FormContent>
-              <Input type="text" id="name"></Input>
-            </FormContent>
-            <Label htmlFor="amount">구분</Label>
-            <FormContent>{/* <ActionsButton>지출</ActionsButton> */}</FormContent>
-            <Label htmlFor="amount">금액</Label>
-            <FormContent>
-              <Input type="number" id="amount"></Input>
-              {/* <ActionsButton>x</ActionsButton> */}
-            </FormContent>
-            <Label htmlFor="name">사용내역</Label>
-            <FormContent>
-              <Input type="text" id="name"></Input>
-            </FormContent>
-            <Label htmlFor="place">사용장소</Label>
-            <FormContent>
-              <Input type="text" id="place"></Input>
-            </FormContent>
-            <Label htmlFor="사용장소">분류</Label>
-            <FormContent>
-              <Input type="text" id="category"></Input>
-            </FormContent>
-          </Grid>
-        </Form>
+
+        <ExpenditureForm />
       </Dialog>
     </Modal>
   );
 };
-
-const HeaderTitle = styled.h3``;
-
-const FormContent = styled.div`
-  display: flex;
-  align-items: center;
-  border-bottom: 1px solid gray;
-  border-left: 2px double crimson;
-  width: 100%;
-  padding-left: 10px;
-`;
-
-const Form = styled.form`
-  width: 100%;
-`;
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  width: 100%;
-`;
-
-const Label = styled.label`
-  width: 100%;
-  border-bottom: 1px solid gray;
-  padding: 5px 5px 5px 15px;
-`;
 
 const Modal = styled.div`
   width: 100%;
@@ -86,25 +29,6 @@ const Modal = styled.div`
   top: 0;
   left: 0;
   background: #000000cc;
-`;
-
-const Input = styled.input`
-  border: none;
-  width: 100%;
-  caret-color: #15cbadbd;
-
-  &::-webkit-inner-spin-actionsbutton {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-  &::-webkit-outer-spin-actionsbutton {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-
-  &:focus {
-    outline: none;
-  }
 `;
 
 const Dialog = styled.div`
@@ -122,4 +46,5 @@ const Dialog = styled.div`
   overflow: auto;
   border-radius: 6px;
 `;
+
 export default RegisterModal;

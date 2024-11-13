@@ -22,4 +22,19 @@ const HeaderActions = styled.div`
   height: 50px;
 `;
 
-export { ActionsButton, HeaderActions };
+const FormContent = styled.div`
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid gray;
+  border-left: 2px double crimson;
+  width: 100%;
+  padding-left: 10px;
+`;
+
+const Label = styled.label`
+  width: 100%;
+  border-bottom: 1px solid gray;
+  padding: 5px 5px 5px 15px;
+`;
+
+export { ActionsButton, HeaderActions, FormContent, Label };
