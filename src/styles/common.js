@@ -1,13 +1,17 @@
 import styled from 'styled-components';
 
-const ActionsButton = styled.button`
+const Button = styled.button`
   border: none;
   border-radius: 4px;
+  width: 80px;
   height: 35px;
   color: white;
   padding: 7px;
-  background-color: #3e80fa;
   font-weight: bold;
+  background-color: #3e80fa;
+`;
+
+const ActionsButton = styled(Button)`
   box-shadow: inset 0 0 1px;
 `;
 
@@ -37,4 +41,4 @@ const Label = styled.label`
   padding: 5px 5px 5px 15px;
 `;
 
-export { ActionsButton, HeaderActions, FormContent, Label };
+export { ActionsButton, HeaderActions, FormContent, Label, Button };

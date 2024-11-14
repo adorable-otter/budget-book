@@ -9,12 +9,12 @@ const SelectedExpenditureSlice = createSlice({
       const newExpenditure = action.payload;
       state.selectedExpenditure = newExpenditure;
     },
-    unSelectExpenditure: (state) => {
+    unselectExpenditure: (state) => {
       state.selectedExpenditure = initialFormState;
     },
   },
 });
 
-export const { selectExpenditure, unSelectExpenditure } = SelectedExpenditureSlice.actions;
+export const { selectExpenditure, unselectExpenditure } = SelectedExpenditureSlice.actions;
 
 export default SelectedExpenditureSlice.reducer;

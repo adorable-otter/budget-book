@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeRegisterModal } from '../redux/slices/RegisterModalSlice';
 import ExpenditureForm from './ExpenditureForm';
-import { unSelectExpenditure } from '../redux/slices/SelectedExpenditureSlice';
+import { unselectExpenditure } from '../redux/slices/SelectedExpenditureSlice';
 
 const RegisterModal = () => {
   const { isRegisterModalOpen } = useSelector((state) => state.isRegisterModalOpen);
@@ -15,7 +15,7 @@ const RegisterModal = () => {
   const handleBackdropClick = (e) => {
     if (e.target === modal.current) {
       dispatch(closeRegisterModal());
-      dispatch(unSelectExpenditure())
+      dispatch(unselectExpenditure())
     }
   };
 
@@ -48,7 +48,7 @@ const Dialog = styled.div`
   background-color: #ffffff;
   width: 35%;
   max-height: 90vh;
-  min-height: 500px;
+  min-height: 400px;
   overflow: auto;
   border-radius: 6px;
 `;

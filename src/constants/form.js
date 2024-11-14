@@ -5,5 +5,5 @@ export const initialFormState = {
     place: '',
     category: '',
     categoryName: '미분류',
-    id: new Date().getTime(),
+    id: ''
 };
