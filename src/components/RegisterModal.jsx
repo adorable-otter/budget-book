@@ -15,7 +15,7 @@ const RegisterModal = () => {
   const handleBackdropClick = (e) => {
     if (e.target === modal.current) {
       dispatch(closeRegisterModal());
-      dispatch(unselectExpenditure())
+      dispatch(unselectExpenditure());
     }
   };
 
