@@ -1,21 +1,22 @@
-import styled from 'styled-components';
-import FormInput from './FormInput';
-import useForm from '../modules/useForm';
-import { ActionsButton, Button, FormContent, HeaderActions, Label } from '../styles/common';
-import { useDispatch, useSelector } from 'react-redux';
+import styled from "styled-components";
+import FormInput from "./FormInput";
+import useForm from "../modules/useForm";
+import { ActionsButton, Button, FormContent, HeaderActions, Label } from "../styles/common";
+import { useDispatch, useSelector } from "react-redux";
 import {
   addExpenditure,
   deleteExpenditure,
   updateExpenditure,
-} from '../redux/slices/ExpendituresSlice';
-import { closeRegisterModal } from '../redux/slices/RegisterModalSlice';
-import { unselectExpenditure } from '../redux/slices/SelectedExpenditureSlice';
+} from "../redux/slices/ExpendituresSlice";
+import { closeRegisterModal } from "../redux/slices/RegisterModalSlice";
+import { unselectExpenditure } from "../redux/slices/SelectedExpenditureSlice";
+import { DatePicker } from "antd";
 
 const ExpenditureForm = () => {
   const { selectedExpenditure } = useSelector((state) => state.selectedExpenditure);
-  const { values, handleInputChange, resetForm } = useForm(selectedExpenditure);
+  const { values, handleInputChange, resetForm, handleDateChange } = useForm(selectedExpenditure);
   const dispatch = useDispatch();
-  const isUpdateMode = selectedExpenditure.id !== '';
+  const isUpdateMode = selectedExpenditure.id !== "";
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
@@ -42,32 +43,33 @@ const ExpenditureForm = () => {
         <ActionsButton type="submit">저장하기</ActionsButton>
       </HeaderActions>
       <Grid>
-        <FormInput
-          name={'date'}
-          label={'날짜'}
-          type=""
-          onChange={handleInputChange}
-          values={values}
-        />
+        <Label>날짜</Label>
+        <FormContent>
+          <DatePicker
+            onChange={(_, dateString) => handleDateChange(dateString, "date")}
+            variant="borderless"
+            placeholder=""
+          />
+        </FormContent>
         <Label>구분</Label>
         <FormContent></FormContent>
         <FormInput
-          name={'amount'}
-          label={'금액'}
+          name={"amount"}
+          label={"금액"}
           type="number"
           onChange={handleInputChange}
           values={values}
         />
         <FormInput
-          name={'name'}
-          label={'사용내역'}
+          name={"name"}
+          label={"사용내역"}
           type="text"
           onChange={handleInputChange}
           values={values}
         />
         <FormInput
-          name={'place'}
-          label={'사용장소'}
+          name={"place"}
+          label={"사용장소"}
           type="text"
           onChange={handleInputChange}
           values={values}
