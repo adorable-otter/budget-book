@@ -1,9 +1,20 @@
-import ExpenditureRow from './ExpenditureRow';
-import { useSelector } from 'react-redux';
+import ExpenditureRow from "./ExpenditureRow";
+import { fetchExpenditures } from "../apis/expenditures";
+import { useQuery } from "@tanstack/react-query";
 
 const ExpenditureList = () => {
-  const { expenditures } = useSelector((state) => state.expenditures);
-  
+  const {
+    data: expenditures,
+    isPending,
+    isError,
+  } = useQuery({
+    queryKey: ["expenditures"],
+    queryFn: fetchExpenditures,
+  });
+
+  if (isPending) return <div>loading...</div>;
+  if (isError) return <div>error...</div>;
+
   return (
     <div>
       {expenditures.map((data) => (
@@ -12,7 +23,5 @@ const ExpenditureList = () => {
     </div>
   );
 };
-
-
 
 export default ExpenditureList;

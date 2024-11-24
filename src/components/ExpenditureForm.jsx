@@ -1,36 +1,35 @@
-import styled from "styled-components";
-import FormInput from "./FormInput";
-import useForm from "../modules/useForm";
-import { ActionsButton, Button, FormContent, HeaderActions, Label } from "../styles/common";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  addExpenditure,
-  deleteExpenditure,
-  updateExpenditure,
-} from "../redux/slices/ExpendituresSlice";
-import { closeRegisterModal } from "../redux/slices/RegisterModalSlice";
-import { unselectExpenditure } from "../redux/slices/SelectedExpenditureSlice";
-import { DatePicker } from "antd";
+import styled from 'styled-components';
+import FormInput from './FormInput';
+import useForm from '../hooks/useForm';
+import { ActionsButton, Button, FormContent, HeaderActions, Label } from '../styles/common';
+import { closeRegisterModal } from '../redux/slices/RegisterModalSlice';
+import { unselectExpenditure } from '../redux/slices/SelectedExpenditureSlice';
+import { DatePicker } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import useExpenditures from '../hooks/useExpenditures';
+import dayjs from 'dayjs';
 
 const ExpenditureForm = () => {
   const { selectedExpenditure } = useSelector((state) => state.selectedExpenditure);
   const { values, handleInputChange, resetForm, handleDateChange } = useForm(selectedExpenditure);
+  const { addExpenditureMutation, updateExpenditureMutation, deleteExpenditureMutation } =
+    useExpenditures();
   const dispatch = useDispatch();
-  const isUpdateMode = selectedExpenditure.id !== "";
+  const isUpdateMode = !!selectedExpenditure.id;
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (isUpdateMode) {
-      dispatch(updateExpenditure(values));
+      updateExpenditureMutation.mutate(values);
     } else {
-      dispatch(addExpenditure(values));
+      addExpenditureMutation.mutate(values);
     }
     dispatch(closeRegisterModal());
     resetForm();
   };
 
   const handleDeleteButtonClick = () => {
-    dispatch(deleteExpenditure(selectedExpenditure));
+    deleteExpenditureMutation.mutate(selectedExpenditure.id);
     dispatch(unselectExpenditure());
     dispatch(closeRegisterModal());
   };
@@ -46,30 +45,31 @@ const ExpenditureForm = () => {
         <Label>날짜</Label>
         <FormContent>
           <DatePicker
-            onChange={(_, dateString) => handleDateChange(dateString, "date")}
+            onChange={(_, dateString) => handleDateChange(dateString, 'date')}
             variant="borderless"
             placeholder=""
+            defaultValue={isUpdateMode ? dayjs(values.date, 'YYYY-MM-DD') : ''}
           />
         </FormContent>
         <Label>구분</Label>
         <FormContent></FormContent>
         <FormInput
-          name={"amount"}
-          label={"금액"}
+          name={'amount'}
+          label={'금액'}
           type="number"
           onChange={handleInputChange}
           values={values}
         />
         <FormInput
-          name={"name"}
-          label={"사용내역"}
+          name={'content'}
+          label={'사용내역'}
           type="text"
           onChange={handleInputChange}
           values={values}
         />
         <FormInput
-          name={"place"}
-          label={"사용장소"}
+          name={'place'}
+          label={'사용장소'}
           type="text"
           onChange={handleInputChange}
           values={values}

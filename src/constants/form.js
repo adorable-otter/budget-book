@@ -1,9 +1,9 @@
 export const initialFormState = {
     date: '',
     amount: 0,
-    name: '',
+    content: '',
     place: '',
-    category: '',
-    categoryName: '미분류',
-    id: ''
+    // category: '',
+    // categoryName: '미분류',
+    // id: ''
 };
