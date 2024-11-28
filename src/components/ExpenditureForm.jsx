@@ -1,35 +1,35 @@
 import styled from 'styled-components';
 import FormInput from './FormInput';
 import useForm from '../hooks/useForm';
-import { ActionsButton, Button, FormContent, HeaderActions, Label } from '../styles/common';
+import { ActionsButton, FormContent, HeaderActions, Label } from '../styles/common';
 import { closeRegisterModal } from '../redux/slices/RegisterModalSlice';
 import { unselectExpenditure } from '../redux/slices/SelectedExpenditureSlice';
-import { DatePicker } from 'antd';
+import { Button, DatePicker } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import useExpenditures from '../hooks/useExpenditures';
 import dayjs from 'dayjs';
+import CategoryDropdown from './CategoryDropdown';
 
 const ExpenditureForm = () => {
   const { selectedExpenditure } = useSelector((state) => state.selectedExpenditure);
   const { values, handleInputChange, resetForm, handleDateChange } = useForm(selectedExpenditure);
-  const { addExpenditureMutation, updateExpenditureMutation, deleteExpenditureMutation } =
-    useExpenditures();
+  const { addExpenditure, updateExpenditure, deleteExpenditure } = useExpenditures();
   const dispatch = useDispatch();
   const isUpdateMode = !!selectedExpenditure.id;
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (isUpdateMode) {
-      updateExpenditureMutation.mutate(values);
+      updateExpenditure.mutate(values);
     } else {
-      addExpenditureMutation.mutate(values);
+      addExpenditure.mutate(values);
     }
     dispatch(closeRegisterModal());
     resetForm();
   };
 
   const handleDeleteButtonClick = () => {
-    deleteExpenditureMutation.mutate(selectedExpenditure.id);
+    deleteExpenditure.mutate(selectedExpenditure.id);
     dispatch(unselectExpenditure());
     dispatch(closeRegisterModal());
   };
@@ -75,7 +75,9 @@ const ExpenditureForm = () => {
           values={values}
         />
         <Label htmlFor="category">분류</Label>
-        <FormContent></FormContent>
+        <FormContent>
+          <CategoryDropdown />
+        </FormContent>
       </Grid>
       {isUpdateMode && <DeleteButton onClick={handleDeleteButtonClick}>삭제</DeleteButton>}
     </Form>

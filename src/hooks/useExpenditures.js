@@ -1,34 +1,38 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addExpenditure, deleteExpenditure, updateExpenditure } from "../apis/expenditures";
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import {
+  requestAddExpenditure,
+  requestDeleteExpenditure,
+  requestUpdateExpenditure,
+} from '../apis/expenditures';
 
 const useExpenditures = () => {
   const queryClient = useQueryClient();
 
-  const addExpenditureMutation = useMutation({
-    mutationFn: addExpenditure,
+  const addExpenditure = useMutation({
+    mutationFn: requestAddExpenditure,
     onSuccess: () => {
-      queryClient.invalidateQueries(["expenditures"]);
+      queryClient.invalidateQueries(['expenditures']);
     },
     onError: (err) => {
       console.log(err);
     },
   });
 
-  const updateExpenditureMutation = useMutation({
-    mutationFn: updateExpenditure,
+  const updateExpenditure = useMutation({
+    mutationFn: requestUpdateExpenditure,
     onSuccess: () => {
-      queryClient.invalidateQueries(["expenditures"]);
+      queryClient.invalidateQueries(['expenditures']);
     },
   });
 
-  const deleteExpenditureMutation = useMutation({
-    mutationFn: deleteExpenditure,
+  const deleteExpenditure = useMutation({
+    mutationFn: requestDeleteExpenditure,
     onSuccess: () => {
-      queryClient.invalidateQueries(["expenditures"]);
+      queryClient.invalidateQueries(['expenditures']);
     },
   });
 
-  return { addExpenditureMutation, updateExpenditureMutation, deleteExpenditureMutation };
+  return { addExpenditure, updateExpenditure, deleteExpenditure };
 };
 
 export default useExpenditures;

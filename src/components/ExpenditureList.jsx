@@ -1,6 +1,7 @@
 import ExpenditureRow from "./ExpenditureRow";
 import { fetchExpenditures } from "../apis/expenditures";
 import { useQuery } from "@tanstack/react-query";
+import styled from "styled-components";
 
 const ExpenditureList = () => {
   const {
@@ -16,12 +17,17 @@ const ExpenditureList = () => {
   if (isError) return <div>error...</div>;
 
   return (
-    <div>
+    <Wrap>
       {expenditures.map((data) => (
         <ExpenditureRow key={data.id} data={data} />
       ))}
-    </div>
+    </Wrap>
   );
 };
+
+const Wrap = styled.div`
+  border: 1px solid gray;
+  border-bottom: none;
+`
 
 export default ExpenditureList;
