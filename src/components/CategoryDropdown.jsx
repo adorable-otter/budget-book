@@ -7,35 +7,37 @@ import getCategoryIcons from '../modules/categoryIcons';
 const CategoryDropdown = () => {
   const [selectedMenu, setSelectedMenu] = useState({
     label: '미분류',
+    key: '0',
     icon: getCategoryIcons('none', {}),
+    code: 'none',
   });
 
-  const { data: categories } = useQuery({
-    queryKey: ['expenditureCategories'],
+  const { data: categories, isPending } = useQuery({
+    queryKey: ['categories'],
     queryFn: fetchExpenditureCategories,
-    enabled: false,
+  });
+
+  if (isPending) return null;
+
+  const items = categories?.map((category) => {
+    return {
+      label: category.name,
+      key: String(category.order),
+      icon: getCategoryIcons(category.code, {}),
+      code: category.code,
+    };
   });
 
   const handleMenuClick = (e) => {
     setSelectedMenu(items.find((value) => value.key === e.key));
   };
 
-  const items = categories?.map((category) => {
-    return {
-      label: category.name,
-      key: category.order,
-      icon: getCategoryIcons(category.code, {}),
-      code: category.code,
-    };
-  });
-
-  const menuProps = {
-    items,
-    onClick: handleMenuClick,
+  const createMenuProps = () => {
+    return { items, onClick: handleMenuClick };
   };
 
   return (
-    <Dropdown menu={menuProps}>
+    <Dropdown menu={createMenuProps()}>
       <Button>
         {selectedMenu.icon}
         <Space>{selectedMenu.label}</Space>
