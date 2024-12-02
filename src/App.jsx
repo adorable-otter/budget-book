@@ -1,11 +1,20 @@
+import { ToastContainer } from 'react-toastify';
 import './App.css';
 import Router from './shared/Router';
 
 function App() {
   return (
-    <div>
+    <>
       <Router />
-    </div>
+      <ToastContainer
+        position="top-right"
+        autoClose={1000}
+        hideProgressBar={true}
+        closeOnClick
+        draggable
+        theme="light"
+      />
+    </>
   );
 }
 

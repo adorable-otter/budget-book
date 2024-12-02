@@ -1,6 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import styled from 'styled-components';
 import Home from '../pages/Home';
+import SignUp from '../pages/SignUp';
 
 const Router = () => {
   return (
@@ -8,6 +9,7 @@ const Router = () => {
       <Layout>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/sign-up" element={<SignUp />} />
         </Routes>
       </Layout>
     </BrowserRouter>
