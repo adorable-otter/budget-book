@@ -12,10 +12,10 @@ const useForm = (initialValues) => {
     });
   };
 
-  const handleDateChange = (dateString, name) => {
+  const handleValueChange = (name, value) => {
     setValues({
       ...values,
-      [name]: dateString,
+      [name]: value,
     });
   };
 
@@ -23,7 +23,7 @@ const useForm = (initialValues) => {
     setValues(initialFormState);
   };
 
-  return { values, handleInputChange, handleDateChange, resetForm };
+  return { values, handleInputChange, handleValueChange, resetForm };
 };
 
 export default useForm;

@@ -12,17 +12,18 @@ import CategoryDropdown from './CategoryDropdown';
 
 const ExpenditureForm = () => {
   const { selectedExpenditure } = useSelector((state) => state.selectedExpenditure);
-  const { values, handleInputChange, resetForm, handleDateChange } = useForm(selectedExpenditure);
+  const { values, handleInputChange, resetForm, handleValueChange } = useForm(selectedExpenditure);
   const { addExpenditure, updateExpenditure, deleteExpenditure } = useExpenditures();
+  const { authUser } = useSelector((state) => state.authUser);
   const dispatch = useDispatch();
   const isUpdateMode = !!selectedExpenditure.id;
-
+  
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (isUpdateMode) {
       updateExpenditure.mutate(values);
     } else {
-      addExpenditure.mutate(values);
+      addExpenditure.mutate({...values, user_id: authUser.id});
     }
     dispatch(closeRegisterModal());
     resetForm();
@@ -45,7 +46,7 @@ const ExpenditureForm = () => {
         <Label>날짜</Label>
         <FormContent>
           <DatePicker
-            onChange={(_, dateString) => handleDateChange(dateString, 'date')}
+            onChange={(_, dateString) => handleValueChange('date', dateString)}
             variant="borderless"
             placeholder=""
             defaultValue={isUpdateMode ? dayjs(values.date, 'YYYY-MM-DD') : ''}
@@ -76,7 +77,7 @@ const ExpenditureForm = () => {
         />
         <Label htmlFor="category">분류</Label>
         <FormContent>
-          <CategoryDropdown />
+          <CategoryDropdown onChange={handleValueChange} />
         </FormContent>
       </Grid>
       {isUpdateMode && <DeleteButton onClick={handleDeleteButtonClick}>삭제</DeleteButton>}
