@@ -9,21 +9,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import useExpenditures from '../hooks/useExpenditures';
 import dayjs from 'dayjs';
 import CategoryDropdown from './CategoryDropdown';
+import useExpenditureCategories from '../hooks/useExpenditureCategories';
 
 const ExpenditureForm = () => {
   const { selectedExpenditure } = useSelector((state) => state.selectedExpenditure);
-  const { values, handleInputChange, resetForm, handleValueChange } = useForm(selectedExpenditure);
-  const { addExpenditure, updateExpenditure, deleteExpenditure } = useExpenditures();
   const { authUser } = useSelector((state) => state.authUser);
+  const { addExpenditure, updateExpenditure, deleteExpenditure } = useExpenditures();
+  const { data: categories, isPending } = useExpenditureCategories();
   const dispatch = useDispatch();
+  const { values, handleInputChange, resetForm, handleValueChange } = useForm(() => {
+    const initialState = { ...selectedExpenditure };
+    delete initialState.categories;
+    return initialState;
+  });
   const isUpdateMode = !!selectedExpenditure.id;
-  
+
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (isUpdateMode) {
-      updateExpenditure.mutate(values);
+      updateExpenditure.mutate({ ...values, user_id: authUser.id });
     } else {
-      addExpenditure.mutate({...values, user_id: authUser.id});
+      addExpenditure.mutate({ ...values, user_id: authUser.id });
     }
     dispatch(closeRegisterModal());
     resetForm();
@@ -34,6 +40,8 @@ const ExpenditureForm = () => {
     dispatch(unselectExpenditure());
     dispatch(closeRegisterModal());
   };
+
+  if (isPending) return null;
 
   return (
     <Form onSubmit={handleFormSubmit}>
@@ -77,7 +85,11 @@ const ExpenditureForm = () => {
         />
         <Label htmlFor="category">분류</Label>
         <FormContent>
-          <CategoryDropdown onChange={handleValueChange} />
+          <CategoryDropdown
+            onChange={handleValueChange}
+            categories={categories}
+            categoryId={values.category_id}
+          />
         </FormContent>
       </Grid>
       {isUpdateMode && <DeleteButton onClick={handleDeleteButtonClick}>삭제</DeleteButton>}

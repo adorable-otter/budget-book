@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import { ActionsButton, HeaderActions } from '../styles/common';
 import { useDispatch } from 'react-redux';
 import { openRegisterModal } from '../redux/slices/RegisterModalSlice';
+import YearMonthPicker from './YearMonthPicker';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -10,7 +11,7 @@ const Header = () => {
     <HeaderWrap>
       <HeaderActions>
         <ActionsButton>검색</ActionsButton>
-        <h2>2024.11</h2>
+        <YearMonthPicker />
         <ActionsButton
           onClick={() => {
             dispatch(openRegisterModal());

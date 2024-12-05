@@ -1,25 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
 import { Button, Dropdown, Space } from 'antd';
-import { useState } from 'react';
-import { fetchExpenditureCategories } from '../apis/expenditures';
 import getCategoryIcons from '../modules/categoryIcons';
 
-const CategoryDropdown = ({ onChange }) => {
-  const [selectedMenu, setSelectedMenu] = useState({
-    label: '미분류',
-    key: '0',
-    icon: getCategoryIcons('none', {}),
-    code: 'none',
-  });
-  
-  const { data: categories, isPending } = useQuery({
-    queryKey: ['categories'],
-    queryFn: fetchExpenditureCategories,
-  });
-
-  if (isPending) return null;
-  
-  const items = categories?.map((category) => {
+const CategoryDropdown = ({ onChange, categories, categoryId }) => {
+  const items = categories.map((category) => {
     return {
       label: category.name,
       key: String(category.order),
@@ -30,20 +13,23 @@ const CategoryDropdown = ({ onChange }) => {
   });
   
   const handleMenuClick = (e) => {
-    const selectedItem = items.find((value) => value.key === e.key); 
-    setSelectedMenu(selectedItem);
+    const selectedItem = items.find((value) => value.key === e.key);
     onChange('category_id', selectedItem.id);
   };
-
+  
   const createMenuProps = () => {
     return { items, onClick: handleMenuClick };
   };
-
+  
+  const selectedItem = categoryId
+  ? items.find((item) => item.id === categoryId)
+  : items.find((item) => item.code === 'none');
+  
   return (
     <Dropdown menu={createMenuProps()}>
       <Button>
-        {selectedMenu.icon}
-        <Space>{selectedMenu.label}</Space>
+        {selectedItem.icon}
+        <Space>{selectedItem.label}</Space>
       </Button>
     </Dropdown>
   );

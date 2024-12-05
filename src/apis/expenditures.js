@@ -3,11 +3,10 @@ import supabase from '../db';
 export const requestAddExpenditure = async (newExpenditure) => {
   const { error } = await supabase.from('expenditures').insert(newExpenditure);
   if (error) throw error;
-  console.log(error);
 };
 
 export const requestUpdateExpenditure = async (toUpdate) => {
-  const { error } = await supabase.from('expenditures').update(toUpdate);
+  const { error } = await supabase.from('expenditures').update(toUpdate).eq('id', toUpdate.id);
   if (error) throw error;
 };
 
@@ -16,8 +15,11 @@ export const requestDeleteExpenditure = async (id) => {
   if (error) throw error;
 };
 
-export const fetchExpenditures = async () => {
-  const { data, error } = await supabase.from('expenditures').select('*, categories!left(*)');
+export const fetchExpenditures = async (userId) => {
+  const { data, error } = await supabase
+    .from('expenditures')
+    .select('*, categories!left(*)')
+    .eq('user_id', userId);
   if (error) throw error;
   return data;
 };
