@@ -1,18 +1,19 @@
 import { Button, DatePicker } from 'antd';
-import { useState } from 'react';
-import dayjs from 'dayjs';
 import { CaretLeftOutlined, CaretRightOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { move, selectYearMonth } from '../redux/slices/SelectedYearMonthSlice';
 
 const YearMonthPicker = () => {
-  const [currentDate, setCurrentDate] = useState(dayjs());
+  const { selectedYearMonth } = useSelector((state) => state.selectedYearMonth);
+  const dispatch = useDispatch();
 
   const handleMonthChange = (amount) => {
-    setCurrentDate((prev) => prev.add(amount, 'month'));
+    dispatch(move({ amount, target: 'month' }));
   };
 
   const handleDateChange = (date) => {
-    setCurrentDate(date);
+    dispatch(selectYearMonth(date));
   };
 
   return (
@@ -24,7 +25,7 @@ const YearMonthPicker = () => {
       />
       <DatePicker
         picker="month"
-        value={currentDate}
+        value={selectedYearMonth}
         onChange={handleDateChange}
         format="YYYY-MM"
         allowClear={false}

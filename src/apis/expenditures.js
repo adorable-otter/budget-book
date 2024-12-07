@@ -15,11 +15,13 @@ export const requestDeleteExpenditure = async (id) => {
   if (error) throw error;
 };
 
-export const fetchExpenditures = async (userId) => {
+export const fetchExpenditures = async (userId, date, nextDate) => {
   const { data, error } = await supabase
     .from('expenditures')
     .select('*, categories!left(*)')
-    .eq('user_id', userId);
+    .eq('user_id', userId)
+    .gte('date', date)
+    .lt('date', nextDate);
   if (error) throw error;
   return data;
 };

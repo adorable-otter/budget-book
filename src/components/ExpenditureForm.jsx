@@ -1,27 +1,25 @@
-import styled from 'styled-components';
 import FormInput from './FormInput';
 import useForm from '../hooks/useForm';
 import { ActionsButton, FormContent, HeaderActions, Label } from '../styles/common';
 import { closeRegisterModal } from '../redux/slices/RegisterModalSlice';
 import { unselectExpenditure } from '../redux/slices/SelectedExpenditureSlice';
-import { Button, DatePicker } from 'antd';
+import { DatePicker } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import useExpenditures from '../hooks/useExpenditures';
 import dayjs from 'dayjs';
 import CategoryDropdown from './CategoryDropdown';
 import useExpenditureCategories from '../hooks/useExpenditureCategories';
+import { DeleteButton, Form, Grid, HeaderTitle } from '../styles/registerFrom';
 
 const ExpenditureForm = () => {
   const { selectedExpenditure } = useSelector((state) => state.selectedExpenditure);
   const { authUser } = useSelector((state) => state.authUser);
   const { addExpenditure, updateExpenditure, deleteExpenditure } = useExpenditures();
   const { data: categories, isPending } = useExpenditureCategories();
+  const { values, handleInputChange, resetForm, handleValueChange } = useForm(
+    createInitialState(selectedExpenditure)
+  );
   const dispatch = useDispatch();
-  const { values, handleInputChange, resetForm, handleValueChange } = useForm(() => {
-    const initialState = { ...selectedExpenditure };
-    delete initialState.categories;
-    return initialState;
-  });
   const isUpdateMode = !!selectedExpenditure.id;
 
   const handleFormSubmit = (e) => {
@@ -97,27 +95,10 @@ const ExpenditureForm = () => {
   );
 };
 
-const DeleteButton = styled(Button)`
-  margin-left: auto;
-  margin-right: 10px;
-  margin: 0 8px 0 auto;
-  color: white;
-  background-color: #df3e5e;
-`;
-
-const Grid = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  width: 100%;
-  margin-bottom: 10px;
-`;
-
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-const HeaderTitle = styled.h3``;
+const createInitialState = (selectedExpenditure) => {
+  const initialState = { ...selectedExpenditure };
+  delete initialState.categories;
+  return initialState;
+};
 
 export default ExpenditureForm;
