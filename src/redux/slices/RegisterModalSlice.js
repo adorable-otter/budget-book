@@ -1,16 +1,18 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = { isRegisterModalOpen: false };
+const initialState = { isRegisterModalOpen: false, contentType: '' };
 
 const RegisterModalSlice = createSlice({
-  name: 'isRegisterModalOpen',
+  name: 'registerModal',
   initialState: initialState,
   reducers: {
-    openRegisterModal: (state) => {
+    openRegisterModal: (state, action) => {
       state.isRegisterModalOpen = true;
+      state.contentType = action.payload;
     },
     closeRegisterModal: (state) => {
       state.isRegisterModalOpen = false;
+      state.contentType = '';
     },
   },
 });

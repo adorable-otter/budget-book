@@ -3,6 +3,7 @@ import RegisterModal from '../components/RegisterModal';
 import Header from '../components/Header';
 import ExpenditureList from '../components/ExpenditureList';
 import { useSelector } from 'react-redux';
+import BudgetSection from '../components/budget/BudgetSection';
 
 const Home = () => {
   const { authUser } = useSelector((state) => state.authUser);
@@ -11,7 +12,7 @@ const Home = () => {
     <HomeWrap>
       <Header />
       <main>
-        <div>예산 영역</div>
+        <BudgetSection />
         <div>{authUser.nickname}</div>
         <ExpenditureList />
       </main>

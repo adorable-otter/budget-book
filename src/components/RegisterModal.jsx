@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { closeRegisterModal } from '../redux/slices/RegisterModalSlice';
 import ExpenditureForm from './ExpenditureForm';
 import { unselectExpenditure } from '../redux/slices/SelectedExpenditureSlice';
+import BudgetForm from './budget/BudgetForm';
 
 const RegisterModal = () => {
-  const { isRegisterModalOpen } = useSelector((state) => state.isRegisterModalOpen);
+  const { isRegisterModalOpen, contentType } = useSelector((state) => state.registerModal);
   const modal = useRef();
   const dispatch = useDispatch();
 
@@ -19,11 +20,18 @@ const RegisterModal = () => {
     }
   };
 
+  const selectContent = () => {
+    switch (contentType) {
+      case 'budget':
+        return <BudgetForm />;
+      default:
+        return <ExpenditureForm />;
+    }
+  };
+
   return (
     <Modal className={'modal-container'} ref={modal} onClick={(e) => handleBackdropClick(e)}>
-      <Dialog className={'modal-content'}>
-        <ExpenditureForm />
-      </Dialog>
+      <Dialog className={'modal-content'}>{selectContent(contentType)}</Dialog>
     </Modal>
   );
 };

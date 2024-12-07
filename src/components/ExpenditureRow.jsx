@@ -10,7 +10,7 @@ const ExpenditureRow = ({ data }) => {
 
   const handleRowClick = () => {
     dispatch(selectExpenditure(data));
-    dispatch(openRegisterModal());
+    dispatch(openRegisterModal('expenditure'));
   };
 
   return (

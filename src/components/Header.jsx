@@ -14,7 +14,7 @@ const Header = () => {
         <YearMonthPicker />
         <ActionsButton
           onClick={() => {
-            dispatch(openRegisterModal());
+            dispatch(openRegisterModal('expenditure'));
           }}
         >
           작성
