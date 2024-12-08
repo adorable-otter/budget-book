@@ -26,6 +26,9 @@ const useBudget = () => {
       toast.success('예산을 등록했습니다!');
       queryClient.invalidateQueries('budget');
     },
+    onError: () => {
+      toast.error('예산 등록을 실패했습니다!');
+    }
   });
 
   const updateBudget = useMutation({
@@ -34,8 +37,7 @@ const useBudget = () => {
       toast.success('예산을 수정했습니다!');
       queryClient.invalidateQueries('budget');
     },
-    onError: (error) => {
-      console.log("🚀 ~ useBudget ~ error:", error)
+    onError: () => {
       toast.error('예산 수정을 실패했습니다!');
     },
   });
