@@ -9,7 +9,7 @@ const useBudget = () => {
   const { selectedYearMonth } = useSelector((state) => state.selectedYearMonth);
 
   const { data, isPending, isError } = useQuery({
-    queryKey: ['budget', selectedYearMonth.format('YYYY-MM')],
+    queryKey: ['budget', selectedYearMonth.format('YYYY-MM'), authUser.id],
     queryFn: () => {
       return fetchBudgetByYearMonth({
         userId: authUser.id,
@@ -28,7 +28,7 @@ const useBudget = () => {
     },
     onError: () => {
       toast.error('예산 등록을 실패했습니다!');
-    }
+    },
   });
 
   const updateBudget = useMutation({
