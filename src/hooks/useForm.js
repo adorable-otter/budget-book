@@ -23,7 +23,7 @@ const useForm = (initialValues) => {
     setValues(initialFormState);
   };
 
-  return { values, handleInputChange, handleValueChange, resetForm };
+  return { values, handleInputChange, handleValueChange, resetForm, setValues };
 };
 
 export default useForm;

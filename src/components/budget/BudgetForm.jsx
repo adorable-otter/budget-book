@@ -2,38 +2,57 @@ import { closeRegisterModal } from '../../redux/slices/RegisterModalSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Grid, HeaderTitle } from '../../styles/registerFrom';
 import { ActionsButton, FormContent, HeaderActions, Label } from '../../styles/common';
-import { DatePicker } from 'antd';
-import dayjs from 'dayjs';
 import FormInput from '../FormInput';
 import useForm from '../../hooks/useForm';
 import useBudget from '../../hooks/useBudget';
-
-const initialState = {
-  amount: 0,
-  date: dayjs().format('YYYY-MM'),
-};
+import { useEffect } from 'react';
 
 const BudgetForm = () => {
-  const { values, handleInputChange, resetForm, handleValueChange } = useForm(initialState);
+  const { data: budget, isPending, isError, addBudget, updateBudget, yearMonth } = useBudget();
   const { authUser } = useSelector((state) => state.authUser);
-  const { addBudget } = useBudget();
   const dispatch = useDispatch();
+  const { values, handleInputChange, resetForm, setValues } = useForm({
+    amount: 0,
+    date: yearMonth,
+  });
+
+  useEffect(() => {
+    if (budget) {
+      setValues({
+        amount: budget.amount,
+        date: yearMonth,
+      });
+    }
+  }, [budget]);
+
+  if (isPending) return <div>loading...</div>;
+  if (isError) return <div>error</div>;
+
+  const isUpdateMode = !!budget;
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
-    addBudget.mutate(createBudget(values));
+    if (isUpdateMode) {
+      updateBudget.mutate(createBudget({ ...budget, ...values }, isUpdateMode));
+    } else {
+      addBudget.mutate(createBudget(values));
+    }
     dispatch(closeRegisterModal());
     resetForm();
   };
 
-  const createBudget = (values) => {
+  const createBudget = (values, isUpdateMode = false) => {
     const [year, month] = values.date.split('-');
-    return {
+    const budget = {
       user_id: authUser.id,
       year,
       month,
       amount: values.amount,
     };
+    if (isUpdateMode) {
+      budget.id = values.id;
+    }
+    return budget;
   };
 
   return (
@@ -44,16 +63,14 @@ const BudgetForm = () => {
         <ActionsButton type="submit">저장하기</ActionsButton>
       </HeaderActions>
       <Grid>
-        <Label>연/월</Label>
-        <FormContent>
-          <DatePicker
-            onChange={(_, dateString) => handleValueChange('date', dateString)}
-            variant="borderless"
-            placeholder=""
-            picker="month"
-            defaultValue={dayjs(values.date, 'YYYY-MM')}
-          />
-        </FormContent>
+        <FormInput
+          name={'date'}
+          label={'연월'}
+          type="text"
+          onChange={handleInputChange}
+          values={values}
+          inputReadOnly={true}
+        />
         <Label>구분</Label>
         <FormContent>예산</FormContent>
         <FormInput

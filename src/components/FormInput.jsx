@@ -1,12 +1,18 @@
 import styled from 'styled-components';
 import { FormContent, Label } from '../styles/common';
 
-const FormInput = ({ name, type, label, onChange, values }) => {
+const FormInput = ({ name, type, label, onChange, values, inputReadOnly=false }) => {
   return (
     <>
       <Label htmlFor={name}>{label}</Label>
       <FormContent>
-        <Input onChange={onChange} type={type} name={name} value={values[name]} />
+        <Input
+          readOnly={inputReadOnly}
+          onChange={onChange}
+          type={type}
+          name={name}
+          value={values[name]}
+        />
       </FormContent>
     </>
   );
