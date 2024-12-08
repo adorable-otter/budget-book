@@ -36,7 +36,7 @@ const useBudget = () => {
     },
     onError: (error) => {
       console.log("🚀 ~ useBudget ~ error:", error)
-      toast.error('예산을 수정을 실패했습니다!');
+      toast.error('예산 수정을 실패했습니다!');
     },
   });
 

@@ -4,6 +4,7 @@ import {
   requestDeleteExpenditure,
   requestUpdateExpenditure,
 } from '../apis/expenditures';
+import { toast } from 'react-toastify';
 
 const useExpenditures = () => {
   const queryClient = useQueryClient();
@@ -11,6 +12,7 @@ const useExpenditures = () => {
   const addExpenditure = useMutation({
     mutationFn: requestAddExpenditure,
     onSuccess: () => {
+      toast.success('지출 내역을 등록했습니다!')
       queryClient.invalidateQueries(['expenditures']);
     },
     onError: (err) => {
@@ -21,6 +23,7 @@ const useExpenditures = () => {
   const updateExpenditure = useMutation({
     mutationFn: requestUpdateExpenditure,
     onSuccess: () => {
+      toast.success('지출 내역을 수정했습니다!')
       queryClient.invalidateQueries(['expenditures']);
     },
   });
@@ -28,6 +31,7 @@ const useExpenditures = () => {
   const deleteExpenditure = useMutation({
     mutationFn: requestDeleteExpenditure,
     onSuccess: () => {
+      toast.success('지출 내역을 삭제했습니다!')
       queryClient.invalidateQueries(['expenditures']);
     },
   });
