@@ -1,15 +1,15 @@
-import FormInput from './FormInput';
-import useForm from '../hooks/useForm';
-import { ActionsButton, FormContent, HeaderActions, Label } from '../styles/common';
-import { closeRegisterModal } from '../redux/slices/RegisterModalSlice';
-import { unselectExpenditure } from '../redux/slices/SelectedExpenditureSlice';
+import FormInput from '../FormInput';
+import useForm from '../../hooks/useForm';
+import { ActionsButton, FormContent, HeaderActions, Label } from '../../styles/common';
+import { closeRegisterModal } from '../../redux/slices/RegisterModalSlice';
+import { unselectExpenditure } from '../../redux/slices/SelectedExpenditureSlice';
 import { DatePicker } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import useExpenditures from '../hooks/useExpenditures';
+import useExpenditures from '../../hooks/useExpenditures';
 import dayjs from 'dayjs';
-import CategoryDropdown from './CategoryDropdown';
-import useExpenditureCategories from '../hooks/useExpenditureCategories';
-import { DeleteButton, Form, Grid, HeaderTitle } from '../styles/registerFrom';
+import CategoryDropdown from '../CategoryDropdown';
+import useExpenditureCategories from '../../hooks/useExpenditureCategories';
+import { DeleteButton, Form, Grid, HeaderTitle } from '../../styles/registerFrom';
 
 const ExpenditureForm = () => {
   const { selectedExpenditure } = useSelector((state) => state.selectedExpenditure);
@@ -59,7 +59,7 @@ const ExpenditureForm = () => {
           />
         </FormContent>
         <Label>구분</Label>
-        <FormContent></FormContent>
+        <FormContent>지출</FormContent>
         <FormInput
           name={'amount'}
           label={'금액'}

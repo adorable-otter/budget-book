@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import { openRegisterModal } from '../redux/slices/RegisterModalSlice';
+import { openRegisterModal } from '../../redux/slices/RegisterModalSlice';
 import { useDispatch } from 'react-redux';
-import { selectExpenditure } from '../redux/slices/SelectedExpenditureSlice';
-import getCategoryIcons from '../modules/categoryIcons';
+import { selectExpenditure } from '../../redux/slices/SelectedExpenditureSlice';
+import getCategoryIcons from '../../modules/categoryIcons';
 
 const ExpenditureRow = ({ data }) => {
   const { content, amount, categories } = data;

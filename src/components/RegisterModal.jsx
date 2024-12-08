@@ -2,9 +2,9 @@ import { useRef } from 'react';
 import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { closeRegisterModal } from '../redux/slices/RegisterModalSlice';
-import ExpenditureForm from './ExpenditureForm';
 import { unselectExpenditure } from '../redux/slices/SelectedExpenditureSlice';
 import BudgetForm from './budget/BudgetForm';
+import ExpenditureForm from './expenditure/ExpenditureForm';
 
 const RegisterModal = () => {
   const { isRegisterModalOpen, contentType } = useSelector((state) => state.registerModal);

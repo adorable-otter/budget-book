@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 import RegisterModal from '../components/RegisterModal';
 import Header from '../components/Header';
-import ExpenditureList from '../components/ExpenditureList';
 import BudgetSection from '../components/budget/BudgetSection';
+import ExpenditureList from '../components/expenditure/ExpenditureList';
 
 const Home = () => {
 

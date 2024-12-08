@@ -1,8 +1,8 @@
-import ExpenditureRow from './ExpenditureRow';
-import { fetchExpenditures } from '../apis/expenditures';
+import { fetchExpenditures } from '../../apis/expenditures';
 import { useQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
+import ExpenditureRow from './ExpenditureRow';
 
 const ExpenditureList = () => {
   const { authUser } = useSelector((state) => state.authUser);
