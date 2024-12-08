@@ -3,12 +3,17 @@ import { ActionsButton, HeaderActions } from '../styles/common';
 import { useDispatch } from 'react-redux';
 import { openRegisterModal } from '../redux/slices/RegisterModalSlice';
 import YearMonthPicker from './YearMonthPicker';
+import useAuth from '../hooks/auth/useAuth';
 
 const Header = () => {
   const dispatch = useDispatch();
+  const { logout } = useAuth();
 
   return (
     <HeaderWrap>
+      <UserActions>
+        <LogoutButton onClick={logout}>로그아웃</LogoutButton>
+      </UserActions>
       <HeaderActions>
         <ActionsButton>검색</ActionsButton>
         <YearMonthPicker />
@@ -30,6 +35,18 @@ const Header = () => {
     </HeaderWrap>
   );
 };
+
+const LogoutButton = styled.button`
+  border: none;
+  background-color: white;
+  cursor: pointer;
+  font-size: 0.8rem;
+`
+
+const UserActions = styled.div`
+  display: flex;
+  flex-direction: row-reverse;
+`;
 
 const HeaderWrap = styled.div`
   width: 100%;

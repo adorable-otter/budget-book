@@ -13,6 +13,7 @@ const Button = styled.button`
 
 const ActionsButton = styled(Button)`
   box-shadow: inset 0 0 1px;
+  cursor: pointer;
 `;
 
 const HeaderActions = styled.div`

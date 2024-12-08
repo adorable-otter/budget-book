@@ -19,7 +19,7 @@ const useAuth = () => {
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
     dispatch(clearAuthUser());
-    navigate('/');
+    navigate('/login');
   };
 
   return { login, logout };
