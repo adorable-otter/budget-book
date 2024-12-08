@@ -3,15 +3,21 @@ import styled from 'styled-components';
 import Home from '../pages/Home';
 import SignUp from '../pages/SignUp';
 import Login from '../pages/Login';
+import AuthenticatedOnly from './AuthenticatedOnly';
+import NotAuthenticatedOnly from './NotAuthenticatedOnly';
 
 const Router = () => {
   return (
     <BrowserRouter>
       <Layout>
         <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/sign-up" element={<SignUp />} />
-          <Route path="/login" element={<Login />} />
+          <Route element={<AuthenticatedOnly />}>
+            <Route path="/" element={<Home />} />
+          </Route>
+          <Route element={<NotAuthenticatedOnly />}>
+            <Route path="/sign-up" element={<SignUp />} />
+            <Route path="/login" element={<Login />} />
+          </Route>
         </Routes>
       </Layout>
     </BrowserRouter>
