@@ -21,11 +21,11 @@ const Header = () => {
         </ActionsButton>
       </HeaderActions>
       <nav>
-        <MenuList>
+        {/* <MenuList>
           <Menu>한 달 보기</Menu>
           <Menu>일 년 보기</Menu>
           <Menu>통계 </Menu>
-        </MenuList>
+        </MenuList> */}
       </nav>
     </HeaderWrap>
   );
@@ -34,15 +34,19 @@ const Header = () => {
 const HeaderWrap = styled.div`
   width: 100%;
 `;
-const Menu = styled.li`
-  list-style: none;
-  width: 33%;
-  text-align: center;
-`;
 
-const MenuList = styled.ul`
-  display: flex;
-  padding: 0;
-`;
+// const Menu = styled.li`
+//   list-style: none;
+//   width: 33%;
+//   text-align: center;
+//   padding: 10px;
+//   cursor: pointer;
+// `;
+
+// const MenuList = styled.ul`
+//   display: flex;
+//   padding: 0;
+//   border-bottom: 1px solid lightgray;
+// `;
 
 export default Header;

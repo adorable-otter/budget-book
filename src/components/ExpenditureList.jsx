@@ -12,7 +12,7 @@ const ExpenditureList = () => {
     isPending,
     isError,
   } = useQuery({
-    queryKey: ['expenditures', selectedYearMonth.format('YYYY_MM')],
+    queryKey: ['expenditures', selectedYearMonth.format('YYYY-MM')],
     queryFn: () =>
       fetchExpenditures(
         authUser.id,
@@ -35,7 +35,6 @@ const ExpenditureList = () => {
 };
 
 const Wrap = styled.div`
-  border: 1px solid gray;
   border-bottom: none;
 `;
 

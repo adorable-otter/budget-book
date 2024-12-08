@@ -26,8 +26,8 @@ const ExpenditureRow = ({ data }) => {
 const Grid = styled.div`
   display: grid;
   grid-template-columns: 70px 2fr 1fr;
-  border-bottom: 1px solid gray;
   padding: 10px;
+  border-bottom: 1px solid lightgray;
 `;
 
 const CategoryImg = styled.div`
