@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import ExpenditureRow from './ExpenditureRow';
+import DateRow from '../DateRow';
 
 const ExpenditureList = () => {
   const { authUser } = useSelector((state) => state.authUser);
@@ -25,11 +26,21 @@ const ExpenditureList = () => {
   if (isPending) return <div>loading...</div>;
   if (isError) return <div>error...</div>;
 
+  const createRows = () => {
+    let date = '';
+    return expenditures.reduce((acc, expenditure) => {
+      if (date !== expenditure.date) {
+        date = expenditure.date;
+        acc.push(<DateRow date={date} />);
+      }
+      acc.push(<ExpenditureRow key={expenditure.id} data={expenditure} />);
+      return acc;
+    }, []);
+  };
+
   return (
     <Wrap>
-      {expenditures.map((data) => (
-        <ExpenditureRow key={data.id} data={data} />
-      ))}
+      {createRows()}
     </Wrap>
   );
 };

@@ -21,7 +21,8 @@ export const fetchExpenditures = async (userId, date, nextDate) => {
     .select('*, categories!left(*)')
     .eq('user_id', userId)
     .gte('date', date)
-    .lt('date', nextDate);
+    .lt('date', nextDate)
+    .order('date');
   if (error) throw error;
   return data;
 };
