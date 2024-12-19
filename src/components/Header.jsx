@@ -18,6 +18,7 @@ const Header = () => {
         <ActionsButton>검색</ActionsButton>
         <YearMonthPicker />
         <ActionsButton
+          style={{ backgroundColor: '#C62E2E' }}
           onClick={() => {
             dispatch(openRegisterModal('expenditure'));
           }}
@@ -41,7 +42,7 @@ const LogoutButton = styled.button`
   background-color: white;
   cursor: pointer;
   font-size: 0.8rem;
-`
+`;
 
 const UserActions = styled.div`
   display: flex;

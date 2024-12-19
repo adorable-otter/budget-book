@@ -36,7 +36,7 @@ const BudgetSection = () => {
           size={{ height: '20px' }}
           percent={Math.floor((totalExpenditures / budget) * 100)}
           status="active"
-          strokeColor="crimson"
+          strokeColor="#C62E2E"
         />
         <PieChart
           series={[
