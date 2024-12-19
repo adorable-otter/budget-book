@@ -35,7 +35,7 @@ const YearMonthPicker = () => {
         format="YYYY-MM"
         allowClear={false}
         style={{
-          width: '87px',
+          width: '91px',
           color: '#013220',
           fontWeight: 'bold',
         }}
