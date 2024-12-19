@@ -21,7 +21,12 @@ const YearMonthPicker = () => {
       <Button
         icon={<CaretLeftOutlined />}
         onClick={() => handleMonthChange(-1)}
-        style={{ border: 'none', background: 'none', padding: 0 }}
+        style={{
+          border: 'none',
+          background: 'none',
+          padding: 0,
+          color: '#013220',
+        }}
       />
       <DatePicker
         picker="month"
@@ -31,6 +36,8 @@ const YearMonthPicker = () => {
         allowClear={false}
         style={{
           width: '87px',
+          color: '#013220',
+          fontWeight: 'bold',
         }}
         variant="borderless"
         size="large"
@@ -40,7 +47,7 @@ const YearMonthPicker = () => {
       <Button
         icon={<CaretRightOutlined />}
         onClick={() => handleMonthChange(1)}
-        style={{ border: 'none', background: 'none', padding: 0 }}
+        style={{ border: 'none', background: 'none', padding: 0, color: '#013220' }}
       />
     </Wrap>
   );
