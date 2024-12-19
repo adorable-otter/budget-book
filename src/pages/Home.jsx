@@ -24,6 +24,7 @@ const HomeWrap = styled.div`
   width: 50%;
   border: 1px solid lightgray;
   border-bottom: none;
+  margin-bottom: 20px;
 `;
 
 export default Home;
