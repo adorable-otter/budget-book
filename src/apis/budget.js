@@ -5,14 +5,13 @@ export const requestAddBudget = async (newBudget) => {
   if (error) throw error;
 };
 
-export const fetchTotalAmountsByMonth = async ({ userId, startDate, endDate }) => {
+export const fetchMonthlyMainStatistic = async ({ userId, year, month }) => {
   const { data, error } = await supabase
-    .rpc('get_total_amounts_by_month', {
+    .rpc('get_monthly_main_statistics', {
       p_user_id: userId,
-      p_start_date: startDate,
-      p_end_date: endDate,
+      p_year: year,
+      p_month: month,
     })
-    .single();
   if (error) throw error;
   return data;
 };

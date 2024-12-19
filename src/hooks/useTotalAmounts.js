@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchTotalAmountsByMonth } from '../apis/budget';
+import { fetchMonthlyMainStatistic } from '../apis/budget';
 import { useSelector } from 'react-redux';
 
 const useTotalAmounts = () => {
@@ -9,10 +9,10 @@ const useTotalAmounts = () => {
   const { data, isPending, isError, yearMonth } = useQuery({
     queryKey: ['totalAmounts', selectedYearMonth.format('YYYY-MM')],
     queryFn: () =>
-      fetchTotalAmountsByMonth({
+      fetchMonthlyMainStatistic({
         userId: authUser.id,
-        startDate: selectedYearMonth.format('YYYY-MM-01'),
-        endDate: selectedYearMonth.add(1, 'month').format('YYYY-MM-01'),
+        year: selectedYearMonth.format('YYYY'),
+        month: selectedYearMonth.format('MM'),
       }),
   });
 

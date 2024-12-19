@@ -3,20 +3,31 @@ import { openRegisterModal } from '../../redux/slices/RegisterModalSlice';
 import useTotalAmounts from '../../hooks/useTotalAmounts';
 import { Progress } from 'antd';
 import styled from 'styled-components';
+import { pieArcLabelClasses, PieChart } from '@mui/x-charts';
+import { getIconColor } from '../../modules/categoryIcons';
 
 const BudgetSection = () => {
   const dispatch = useDispatch();
-  const { data, isPending, isError } = useTotalAmounts();
+  const { data: dataList, isPending, isError } = useTotalAmounts();
 
   const handleRegisterButtonClick = () => {
     dispatch(openRegisterModal('budget'));
   };
 
+  const createPieChartData = () => {
+    return dataList.map(({ category_code, category_total, total_expenditures, category_name }) => ({
+      id: category_code,
+      value: Math.round((category_total / total_expenditures) * 100),
+      label: category_name,
+      color: getIconColor(category_code),
+    }));
+  };
+
   if (isPending) return <div>loading...</div>;
   if (isError) return <div>error</div>;
 
-  const budget = data ? data.budget_amount : 1;
-  const totalExpenditures = data ? data.total_expenditures : 0;
+  const budget = dataList ? dataList[0].budget_amount : 1;
+  const totalExpenditures = dataList ? dataList[0].total_expenditures : 0;
 
   return (
     <Wrap>
@@ -25,7 +36,31 @@ const BudgetSection = () => {
           size={{ height: '20px' }}
           percent={Math.floor((totalExpenditures / budget) * 100)}
           status="active"
-          strokeColor='crimson'
+          strokeColor="crimson"
+        />
+        <PieChart
+          series={[
+            {
+              data: createPieChartData(),
+              innerRadius: 30,
+              outerRadius: 110,
+              paddingAngle: 5,
+              cornerRadius: 5,
+              startAngle: -45,
+              endAngle: 315,
+              arcLabel: (item) => `${item.value}%`,
+              arcLabelMinAngle: 35,
+              arcLabelRadius: '80%',
+            },
+          ]}
+          sx={{
+            [`& .${pieArcLabelClasses.root}`]: {
+              fontWeight: 'bold',
+              fill: 'white'
+            },
+          }}
+          width={400}
+          height={200}
         />
       </ProgressWrap>
       <MenuList>
@@ -43,7 +78,9 @@ const Wrap = styled.section`
 `;
 
 const ProgressWrap = styled.div`
-  padding: 40px;
+  padding: 0 20px;
+  display: flex;
+  align-items: center;
 `;
 
 const Menu = styled.li`
