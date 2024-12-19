@@ -22,7 +22,7 @@ export const fetchExpenditures = async (userId, date, nextDate) => {
     .eq('user_id', userId)
     .gte('date', date)
     .lt('date', nextDate)
-    .order('date');
+    .order('date', {ascending: false});
   if (error) throw error;
   return data;
 };
