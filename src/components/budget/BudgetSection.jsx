@@ -26,42 +26,44 @@ const BudgetSection = () => {
   if (isPending) return <div>loading...</div>;
   if (isError) return <div>error</div>;
 
-  const budget = dataList ? dataList[0].budget_amount : 1;
-  const totalExpenditures = dataList ? dataList[0].total_expenditures : 0;
+  const budget = dataList.length > 1 ? dataList[0].budget_amount : 1;
+  const totalExpenditures = dataList.length > 1 ? dataList[0].total_expenditures : 0;
 
   return (
     <Wrap>
-      <ProgressWrap>
+      <ProgressWrap isEmpty={dataList.length === 0}>
         <Progress
           size={{ height: '20px' }}
           percent={Math.floor((totalExpenditures / budget) * 100)}
           status="active"
           strokeColor="#C62E2E"
         />
-        <PieChart
-          series={[
-            {
-              data: createPieChartData(),
-              innerRadius: 30,
-              outerRadius: 110,
-              paddingAngle: 5,
-              cornerRadius: 5,
-              startAngle: -45,
-              endAngle: 315,
-              arcLabel: (item) => `${item.value}%`,
-              arcLabelMinAngle: 35,
-              arcLabelRadius: '80%',
-            },
-          ]}
-          sx={{
-            [`& .${pieArcLabelClasses.root}`]: {
-              fontWeight: 'bold',
-              fill: 'white'
-            },
-          }}
-          width={400}
-          height={200}
-        />
+        {dataList.length >= 1 && (
+          <PieChart
+            series={[
+              {
+                data: createPieChartData(),
+                innerRadius: 30,
+                outerRadius: 110,
+                paddingAngle: 5,
+                cornerRadius: 5,
+                startAngle: -45,
+                endAngle: 315,
+                arcLabel: (item) => `${item.value}%`,
+                arcLabelMinAngle: 35,
+                arcLabelRadius: '80%',
+              },
+            ]}
+            sx={{
+              [`& .${pieArcLabelClasses.root}`]: {
+                fontWeight: 'bold',
+                fill: 'white',
+              },
+            }}
+            width={400}
+            height={200}
+          />
+        )}
       </ProgressWrap>
       <MenuList>
         <Menu></Menu>
@@ -78,9 +80,9 @@ const Wrap = styled.section`
 `;
 
 const ProgressWrap = styled.div`
-  padding: 0 20px;
   display: flex;
   align-items: center;
+  padding: ${(props) => (props.isEmpty ? '40px' : '0 20px')};
 `;
 
 const Menu = styled.li`
